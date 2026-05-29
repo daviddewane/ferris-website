@@ -5,7 +5,7 @@
 <div class="page">
 	<header class="hero">
 		<div class="wrap">
-			<p class="eyebrow">100 S. State Street · Chicago</p>
+			<p class="eyebrow">1 W. Monroe Street · Chicago</p>
 			<h1>The <em>Ferris</em></h1>
 			<p class="tagline">An invitation to build inside a living machine.</p>
 		</div>
@@ -214,7 +214,7 @@
 
 	<footer>
 		<div class="wrap footer-row">
-			<span>The Ferris · 100 S. State St.</span>
+			<span>The Ferris · 1 W. Monroe St.</span>
 			<span>Chicago, Illinois</span>
 		</div>
 	</footer>

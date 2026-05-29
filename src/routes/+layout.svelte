@@ -7,7 +7,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<title>The Ferris — 100 S. State Street, Chicago</title>
+	<title>The Ferris — 1 W. Monroe Street, Chicago</title>
 </svelte:head>
 
 {@render children()}
