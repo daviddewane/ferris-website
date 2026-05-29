@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#000000"/>
+  <g fill="#c9a961">
+    <!-- vertical stem -->
+    <rect x="20" y="12" width="9" height="40"/>
+    <!-- top arm -->
+    <rect x="20" y="12" width="27" height="9"/>
+    <!-- middle arm -->
+    <rect x="20" y="28" width="20" height="8"/>
+    <!-- serifs (top) -->
+    <rect x="15" y="12" width="5" height="3"/>
+    <rect x="44" y="12" width="5" height="3"/>
+    <!-- serifs (bottom of stem) -->
+    <rect x="15" y="49" width="19" height="3"/>
+  </g>
+</svg>
