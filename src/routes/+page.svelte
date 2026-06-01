@@ -7,7 +7,7 @@
 		<div class="wrap">
 			<p class="eyebrow">1 W. Monroe Street · Chicago</p>
 			<h1>The <em>Ferris</em></h1>
-			<p class="tagline">An invitation to build inside a living machine.</p>
+			<p class="tagline">An innovation to build in Chicago's innovation center.</p>
 		</div>
 	</header>
 
