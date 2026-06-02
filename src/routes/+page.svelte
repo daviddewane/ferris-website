@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-
 	const SIGNALS = [
 		{
 			title: 'The Ferris',
@@ -38,51 +36,14 @@
 		'https://docs.google.com/forms/d/e/1FAIpQLScxNdNvgCRyxL_oNG2zxTR9NFFJT9FYp28g4NtTg8_X6Y6Ymw/viewform?usp=sharing&ouid=105812463017049232697';
 
 	let open: number | null = $state(null);
-	let rowEls: HTMLElement[] = $state([]);
-	let translateY = $state(0);
-
-	$effect(() => {
-		// Recalculate translateY whenever open or rowEls changes, including after mount
-		void rowEls.length;
-		translateY = open !== null && rowEls[open] ? -rowEls[open].offsetTop : 0;
-	});
-
-	function setOpen(idx: number | null) {
-		open = idx;
-		localStorage.setItem('ferris.signals.open', open === null ? '' : String(open));
-	}
 
 	function toggle(idx: number) {
-		// Always open the clicked section; only Escape / dot cycling closes all
-		setOpen(idx);
-	}
-
-	function advance() {
-		if (open === null) setOpen(0);
-		else if (open < SIGNALS.length - 1) setOpen(open + 1);
-		else setOpen(null);
+		open = open === idx ? null : idx;
 	}
 
 	function handleKey(e: KeyboardEvent) {
-		if (e.key === 'Escape') { setOpen(null); return; }
-		if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); advance(); return; }
-		if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-			e.preventDefault();
-			if (open === null) setOpen(SIGNALS.length - 1);
-			else if (open > 0) setOpen(open - 1);
-			else setOpen(null);
-		}
+		if (e.key === 'Escape') { open = null; }
 	}
-
-	onMount(() => {
-		const saved = localStorage.getItem('ferris.signals.open');
-		if (saved !== null && saved !== '') {
-			const idx = parseInt(saved, 10);
-			if (!isNaN(idx) && idx >= 0 && idx < SIGNALS.length) {
-				open = idx;
-			}
-		}
-	});
 </script>
 
 <svelte:window onkeydown={handleKey} />
@@ -90,7 +51,7 @@
 <div class="chrome top"></div>
 
 <main>
-	<div class="list" style="transform: translateY({translateY}px)">
+	<div class="list">
 		{#each SIGNALS as signal, i}
 			<div
 				class="signal"
@@ -98,7 +59,6 @@
 				class:dimmed={open !== null && open !== i}
 				role="button"
 				tabindex="0"
-				bind:this={rowEls[i]}
 				onclick={(e) => { if ((e.target as HTMLElement).closest('a')) return; toggle(i); }}
 				onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(i); } }}
 			>
@@ -118,12 +78,11 @@
 
 <div class="chrome bottom">
 	<p class="copyright">1 W Monroe, Chicago IL<br />© 2026 The Ferris</p>
-	<button class="dot" onclick={advance} aria-label="Next section"></button>
 </div>
 
 <style>
 	:global(html, body) {
-		overflow: hidden;
+		overflow-x: hidden;
 	}
 
 	.chrome {
@@ -134,30 +93,19 @@
 		padding: 0 clamp(28px, 4vw, 64px);
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
 		z-index: 10;
+		background: #000;
 	}
 	.chrome.top { top: 0; }
 	.chrome.bottom { bottom: 0; }
 
 	main {
-		position: fixed;
-		top: clamp(72px, 9vh, 104px);
-		bottom: clamp(72px, 9vh, 104px);
-		left: 0;
-		right: 0;
-		overflow: hidden;
-		mask-image: linear-gradient(to bottom, transparent 0, #000 5%, #000 91%, transparent 100%);
-		-webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 5%, #000 91%, transparent 100%);
+		padding-top: clamp(72px, 9vh, 104px);
+		padding-bottom: clamp(72px, 9vh, 104px);
 	}
 
 	.list {
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		padding: clamp(20px, 3.5vh, 48px) clamp(28px, 4vw, 64px) 40vh;
-		transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+		padding: clamp(20px, 3.5vh, 48px) clamp(28px, 4vw, 64px);
 	}
 
 	.signal {
@@ -190,15 +138,11 @@
 			max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1),
 			opacity 0.4s,
 			margin 0.4s;
-		overscroll-behavior: contain;
-		scrollbar-width: thin;
-		scrollbar-color: rgba(255, 255, 255, 0.28) transparent;
 	}
 
 	.signal.open .body {
 		opacity: 1;
-		max-height: calc(100vh - 340px);
-		overflow-y: auto;
+		max-height: 80vh;
 		margin: clamp(10px, 1.6vh, 22px) 0 clamp(20px, 3vh, 40px);
 	}
 
@@ -246,22 +190,8 @@
 		color: #fff;
 	}
 
-	.dot {
-		width: clamp(40px, 3.4vw, 56px);
-		height: clamp(40px, 3.4vw, 56px);
-		border-radius: 50%;
-		background: #fff;
-		border: none;
-		cursor: pointer;
-		transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-		flex-shrink: 0;
-	}
-	.dot:hover { transform: scale(1.14); }
-	.dot:active { transform: scale(0.94); }
-
 	@media (max-width: 640px) {
 		.title { font-size: clamp(26px, 8vw, 40px); }
 		.body p { font-size: clamp(18px, 5vw, 24px); max-width: 34ch; }
-		.signal.open .body { max-height: 82vh; }
 	}
 </style>
