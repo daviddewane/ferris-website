@@ -1,548 +1,267 @@
 <script lang="ts">
-	// Static landing page — content lifted from the Ferris invitation letter.
+	import { onMount } from 'svelte';
+
+	const SIGNALS = [
+		{
+			title: 'The Ferris',
+			gold: true,
+			body: `The Ferris is a members club in Chicago for people building companies at the frontiers of technology. AI is in its earliest innings and the most interesting work is being done by people who think like mad scientists. We built a place for you to do it.`
+		},
+		{
+			title: 'What we believe',
+			body: `We believe AI is too important to learn alone. The people getting good at it are the ones surrounded by other builders.\n\nWe believe the space can be a collaborator. The environment can help you optimize your personal performance, build community bonds, and leverage AI agents to help you become more intelligent.\n\nAnd we believe the future of AI doesn't belong to whoever buys the most compute. It belongs to whoever learns to use it well, together.`
+		},
+		{
+			title: 'Who is this for',
+			body: `You come to The Ferris because you're building something with AI and you want to be near other people doing the same.\n\nYou come here because you sense AI is going to reshape your work and you'd rather get ahead of it than fall behind.\n\nYou don't need to be a researcher. You don't need a finished company. You need to be curious, generous with what you know, and a little bit obsessed with what AI is about to make possible.`
+		},
+		{
+			title: 'What you get',
+			body: `The Ferris is, first, a beautiful place to work — designed by some of the best workplace and hospitality architects we've ever met, in the heart of downtown Chicago.\n\nIt's also something more. The building runs its own AI infrastructure on-site. Every member receives access to a personal assistant we call Ferris — an AI that learns the rhythms of your days, the activities of our community, and optimizes the use of our building.`
+		},
+		{
+			title: 'What we ask',
+			body: `Membership at The Ferris is reciprocal. You don't just use what we've built, you make it better.\n\nEvery member contributes back. Sharing what worked. Correcting Ferris when it gets things wrong. The building gets smarter because you're in it, and the next member who walks in inherits the wisdom of everyone who came before.`
+		},
+		{
+			title: 'The honest part',
+			body: `A building that responds to how you work needs to know how you work. The Ferris is instrumented — cameras at sightlines, sensors that read the rhythms of the floor, signals from how the space is used. Members opt in to this with a clear, written waiver. Private zones stay private. Data is aggregated, not personalized for surveillance.\n\nIn return, you get a stake. The AI layer that gets smarter because you helped train it — and members are the first to benefit from it. If that tradeoff isn't for you, there are plenty of other places to work. The Ferris is for people who want to be part of the experiment.`
+		},
+		{
+			title: 'Apply',
+			cta: true,
+			body: `The Ferris has limited capacity and accepts new members as spots become available. We optimize for people with talent, ambition, a willingness to be supportive of peers, and a high level of awareness regarding emerging trends.`
+		}
+	];
+
+	const CTA_HREF =
+		'https://docs.google.com/forms/d/e/1FAIpQLScxNdNvgCRyxL_oNG2zxTR9NFFJT9FYp28g4NtTg8_X6Y6Ymw/viewform?usp=sharing&ouid=105812463017049232697';
+
+	let open: number | null = $state(null);
+	let rowEls: HTMLElement[] = $state([]);
+	let translateY = $state(0);
+
+	function getTranslate(idx: number | null) {
+		if (idx === null || !rowEls[idx]) return 0;
+		return -rowEls[idx].offsetTop;
+	}
+
+	function setOpen(idx: number | null) {
+		open = idx;
+		translateY = getTranslate(open);
+		localStorage.setItem('ferris.signals.open', open === null ? '' : String(open));
+	}
+
+	function toggle(idx: number) {
+		setOpen(open === idx ? null : idx);
+	}
+
+	function advance() {
+		if (open === null) setOpen(0);
+		else if (open < SIGNALS.length - 1) setOpen(open + 1);
+		else setOpen(null);
+	}
+
+	function handleKey(e: KeyboardEvent) {
+		if (e.key === 'Escape') { setOpen(null); return; }
+		if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); advance(); return; }
+		if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+			e.preventDefault();
+			if (open === null) setOpen(SIGNALS.length - 1);
+			else if (open > 0) setOpen(open - 1);
+			else setOpen(null);
+		}
+	}
+
+	onMount(() => {
+		const saved = localStorage.getItem('ferris.signals.open');
+		if (saved !== null && saved !== '') {
+			const idx = parseInt(saved, 10);
+			if (!isNaN(idx) && idx >= 0 && idx < SIGNALS.length) {
+				open = idx;
+				requestAnimationFrame(() => { translateY = getTranslate(open); });
+			}
+		}
+	});
 </script>
 
-<div class="page">
-	<header class="hero">
-		<div class="wrap">
-			<p class="eyebrow">1 W. Monroe Street · Chicago</p>
-			<h1>The <em>Ferris</em></h1>
-			<p class="tagline">An invitation to build in Chicago's innovation center.</p>
-		</div>
-	</header>
+<svelte:window onkeydown={handleKey} />
 
-	<main class="wrap">
-		<section class="lede">
-			<p class="lede-text">
-				AI is in its earliest innings — and the most interesting work is being done by people who
-				think like <em>mad scientists</em>. We built a place for you to do it.
-			</p>
-		</section>
+<div class="chrome top"></div>
 
-		<section>
-			<p>
-				The Ferris began the way good things usually do: a few people, a building in the middle of
-				Chicago, and a stubborn feeling that the rooms most of us work in were not designed for the
-				era we're now living in. Offices were built for a kind of work that AI is quietly making
-				obsolete. The next great companies will be built by people who treat AI like a collaborator
-				— and they need a different kind of room.
-			</p>
-			<p>So we made one.</p>
-		</section>
-
-		<section>
-			<h2 class="subhead">What we believe</h2>
-			<p>
-				We believe AI is too important to learn alone, and too new to learn from a textbook. The
-				people getting good at it are the ones surrounded by other people getting good at it —
-				sharing prompts at lunch, watching each other work, arguing about what's actually useful
-				and what's hype.
-			</p>
-			<p>
-				We believe a building can be a collaborator. Not a backdrop. The rooms you work in should
-				know when you've been heads-down too long, when the energy on the floor has shifted, when
-				it's time to grab water or come back. A space designed by people who understand both
-				architecture and intelligence can quietly give you back your best hours.
-			</p>
-			<p>
-				And we believe the future of AI doesn't belong to whoever buys the most compute. It belongs
-				to whoever <strong>learns to use it well, together.</strong>
-			</p>
-		</section>
-
-		<section>
-			<h2 class="subhead">Who this is for</h2>
-			<ul class="bullets">
-				<li>
-					<strong>You come here</strong> because you're building something with AI and you want to be
-					near other people doing the same.
-				</li>
-				<li>
-					<strong>You come here</strong> because you sense AI is going to reshape your work and you'd
-					rather get ahead of it than be caught by it.
-				</li>
-				<li>
-					<strong>You come here</strong> because curiosity feels lonelier than it should, and you want
-					a room full of people who take ideas — and each other — seriously.
-				</li>
-			</ul>
-			<p>
-				You don't need to be a researcher. You don't need a finished company. You need to be
-				curious, generous with what you know, and a little bit obsessed with what AI is about to
-				make possible.
-			</p>
-		</section>
-
-		<section>
-			<h2 class="subhead">What you get</h2>
-			<p>
-				The Ferris is, first, a beautiful place to work — designed by some of the best workplace
-				and hospitality architects we've ever met, in the heart of downtown Chicago.
-			</p>
-			<p>
-				It's also something more. The building runs its own AI infrastructure on-site. Every member
-				receives a pair of headphones paired to a personal assistant we call <strong>Ferris</strong>
-				— an AI that learns the rhythms of your day and the rhythms of the building, and nudges
-				both toward your best work.
-			</p>
-			<p>
-				And because AI can be overwhelming, three companions sit alongside Ferris. Their job is to
-				help you actually become great at this:
-			</p>
-
-			<div class="agents">
-				<article class="agent">
-					<div class="initial">M</div>
-					<h3>Mira</h3>
-					<p class="role">Prompt coach</p>
-					<p class="agent-body">
-						Helps you write better prompts. Reviews yours, suggests reframes, and teaches you the
-						patterns that separate good prompting from great.
-					</p>
-				</article>
-				<article class="agent">
-					<div class="initial">S</div>
-					<h3>Sage</h3>
-					<p class="role">AI educator</p>
-					<p class="agent-body">
-						Surfaces what's newly possible — models, techniques, tools — so you spend less time
-						hunting and more time building.
-					</p>
-				</article>
-				<article class="agent">
-					<div class="initial">O</div>
-					<h3>Otto</h3>
-					<p class="role">Automation partner</p>
-					<p class="agent-body">
-						Looks at how you actually work and helps you decide what's worth automating — and
-						what's better left to a human.
-					</p>
-				</article>
+<main>
+	<div class="list" style="transform: translateY({translateY}px)">
+		{#each SIGNALS as signal, i}
+			<div
+				class="signal"
+				class:open={open === i}
+				class:dimmed={open !== null && open !== i}
+				role="button"
+				tabindex="0"
+				bind:this={rowEls[i]}
+				onclick={(e) => { if ((e.target as HTMLElement).closest('a')) return; toggle(i); }}
+				onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(i); } }}
+			>
+				<div class="title" class:gold={signal.gold}>{signal.title}</div>
+				<div class="body">
+					{#each signal.body.split('\n\n') as para}
+						<p>{para}</p>
+					{/each}
+					{#if signal.cta}
+						<a class="cta-btn" href={CTA_HREF} target="_blank" rel="noopener">Apply to join</a>
+					{/if}
+				</div>
 			</div>
+		{/each}
+	</div>
+</main>
 
-			<div class="callout">
-				<h3 class="callout-title">The Inner Circle</h3>
-				<p>
-					Behind the agents sits a small group of advisors we've quietly assembled — operators,
-					researchers, and builders who've shipped real things in AI. They work with member
-					companies on the harder, more bespoke questions: where AI fits in your business, how to
-					architect it, who to hire. Every company is different. We treat it that way.
-				</p>
-			</div>
-		</section>
-
-		<section>
-			<h2 class="subhead">What we ask</h2>
-			<p>
-				Membership at The Ferris is reciprocal. You don't just use what we've built — you make it
-				better.
-			</p>
-			<p>
-				Every member contributes back. Sharing what worked. Correcting Ferris when it gets things
-				wrong. Teaching Mira a new prompt pattern. Telling Otto where it got the call right. The
-				building gets smarter because you're in it, and the next member who walks in inherits the
-				wisdom of everyone who came before.
-			</p>
-			<p>
-				The only real expectation: <strong>show up, and give before you ask.</strong>
-			</p>
-		</section>
-
-		<section>
-			<h2 class="subhead">The honest part</h2>
-			<div class="covenant">
-				<h3>A covenant, not a disclosure</h3>
-				<p>
-					A building that responds to how you work needs to know how you work. The Ferris is
-					instrumented — cameras at sightlines, sensors that read the rhythms of the floor, signals
-					from how the space is used. Members opt in to this with a clear, written waiver. Private
-					zones stay private. Data is aggregated, not personalized for surveillance.
-				</p>
-				<p>
-					In return, you get a stake. The AI layer that gets smarter because of you is a layer you
-					helped build — and members are the first to benefit from it. We're building this
-					<strong>with</strong> you, not on you. If that tradeoff isn't for you, there are plenty of
-					other places to work. The Ferris is for people who want to be part of the experiment.
-				</p>
-			</div>
-		</section>
-
-		<section>
-			<h2 class="subhead">What we owe you back</h2>
-			<p>
-				Being part of The Ferris means being measured — and we hold ourselves to the same standard.
-				We'll report openly, to the community, on how we're doing:
-			</p>
-			<ul class="bullets">
-				<li>
-					<strong>System quality:</strong> how much Ferris improved, and an honest count of where it
-					still gets things wrong.
-				</li>
-				<li>
-					<strong>Time returned:</strong> hours the agents saved our members, handed back to the actual
-					work.
-				</li>
-				<li>
-					<strong>Member wellness:</strong> movement, breaks, and the rhythms of a healthy workday.
-				</li>
-			</ul>
-		</section>
-
-		<section class="cta">
-			<p class="cta-lead">
-				If this sounds like <em>your kind of room,</em>
-			</p>
-			<p class="cta-sub">we want to meet you. Applications take about ten minutes. We read every one.</p>
-			<a class="cta-button" href="https://docs.google.com/forms/d/e/1FAIpQLScxNdNvgCRyxL_oNG2zxTR9NFFJT9FYp28g4NtTg8_X6Y6Ymw/viewform?usp=sharing&ouid=105812463017049232697" target="_blank" rel="noopener noreferrer">
-				Apply to join
-			</a>
-			<p class="cta-footnote">Rolling admissions · Limited memberships</p>
-		</section>
-
-		<section class="signoff">
-			<p class="quote">
-				<em>
-					I spent a career thinking about how rooms shape the work that happens in them. The Ferris
-					is the room I always wanted to build, made for the moment we're finally in. Come see it.
-				</em>
-			</p>
-			<p class="warmly">Warmly,</p>
-			<p class="signature">David Dewane</p>
-			<p class="title-line">Executive Director · The Ferris</p>
-		</section>
-	</main>
-
-	<footer>
-		<div class="wrap footer-row">
-			<span>The Ferris · 1 W. Monroe St.</span>
-			<span>Chicago, Illinois</span>
-		</div>
-	</footer>
+<div class="chrome bottom">
+	<p class="copyright">1 W Monroe, Chicago IL<br />© 2026 The Ferris</p>
+	<button class="dot" onclick={advance} aria-label="Next section"></button>
 </div>
 
 <style>
-	.page {
-		min-height: 100vh;
+	:global(html, body) {
+		overflow: hidden;
+	}
+
+	.chrome {
+		position: fixed;
+		left: 0;
+		right: 0;
+		height: clamp(72px, 9vh, 104px);
+		padding: 0 clamp(28px, 4vw, 64px);
 		display: flex;
-		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+		z-index: 10;
 	}
-
-	.wrap {
-		width: 100%;
-		max-width: 720px;
-		margin: 0 auto;
-		padding: 0 28px;
-	}
-
-	/* Hero */
-	.hero {
-		padding: 96px 0 72px;
-		border-bottom: 1px solid var(--rule);
-	}
-
-	.eyebrow {
-		font-family: var(--font-mono);
-		font-size: 11px;
-		letter-spacing: 0.22em;
-		text-transform: uppercase;
-		color: var(--gold);
-		margin: 0 0 28px;
-	}
-
-	h1 {
-		font-family: var(--font-serif);
-		font-weight: 400;
-		font-size: clamp(56px, 11vw, 112px);
-		line-height: 0.95;
-		margin: 0 0 24px;
-		letter-spacing: -0.02em;
-		color: var(--fg);
-	}
-
-	h1 em {
-		font-style: italic;
-		color: var(--gold);
-	}
-
-	.tagline {
-		font-family: var(--font-mono);
-		font-size: 13px;
-		letter-spacing: 0.06em;
-		color: var(--muted);
-		margin: 0;
-	}
+	.chrome.top { top: 0; }
+	.chrome.bottom { bottom: 0; }
 
 	main {
-		padding: 72px 0 96px;
-		flex: 1;
+		position: fixed;
+		top: clamp(72px, 9vh, 104px);
+		bottom: clamp(72px, 9vh, 104px);
+		left: 0;
+		right: 0;
+		overflow: hidden;
+		mask-image: linear-gradient(to bottom, transparent 0, #000 5%, #000 91%, transparent 100%);
+		-webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 5%, #000 91%, transparent 100%);
 	}
 
-	section {
-		margin-bottom: 72px;
+	.list {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		padding: clamp(20px, 3.5vh, 48px) clamp(28px, 4vw, 64px) 40vh;
+		transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1);
 	}
 
-	.lede {
-		margin-bottom: 80px;
+	.signal {
+		cursor: pointer;
+		width: 100%;
 	}
 
-	.lede-text {
-		font-family: var(--font-serif);
-		font-weight: 400;
-		font-size: clamp(24px, 3.4vw, 30px);
-		line-height: 1.35;
-		letter-spacing: -0.005em;
-		color: var(--fg);
-		max-width: 30ch;
+	.title {
+		font-family: 'Archivo', system-ui, sans-serif;
+		font-weight: 800;
+		font-size: clamp(28px, 4.4vw, 58px);
+		letter-spacing: -0.035em;
+		line-height: 1.02;
+		text-wrap: balance;
+		color: #fff;
+		transition: opacity 0.35s ease;
 	}
+	.title:hover { opacity: 0.62; }
+	.title.gold { color: #c9a24b; }
 
-	.lede-text em {
-		color: var(--gold);
-	}
+	.signal.dimmed .title { opacity: 0.4; }
+	.signal.dimmed .title:hover { opacity: 0.7; }
 
-	/* Subheadings — gold */
-	.subhead {
-		font-family: var(--font-mono);
-		font-size: 12px;
-		font-weight: 500;
-		letter-spacing: 0.24em;
-		text-transform: uppercase;
-		color: var(--gold);
-		margin: 0 0 28px;
-		padding-bottom: 14px;
-		border-bottom: 1px solid var(--rule);
-	}
-
-	.bullets {
-		list-style: none;
-		padding: 0 0 0 22px;
-		margin: 0 0 1.5em;
-		border-left: 1px solid var(--gold);
-	}
-
-	.bullets li {
-		margin-bottom: 1em;
-		max-width: 62ch;
-	}
-
-	.bullets li:last-child {
-		margin-bottom: 0;
-	}
-
-	.bullets strong {
-		color: var(--gold-bright);
-		font-weight: 500;
-	}
-
-	/* Agent cards */
-	.agents {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 16px;
-		margin: 36px 0;
-	}
-
-	.agent {
-		background: var(--card);
-		border: 1px solid var(--rule);
-		padding: 24px 22px;
-	}
-
-	.initial {
-		font-family: var(--font-serif);
-		font-style: italic;
-		font-size: 44px;
-		line-height: 1;
-		color: var(--gold);
-		margin-bottom: 16px;
-	}
-
-	.agent h3 {
-		font-family: var(--font-serif);
-		font-weight: 500;
-		font-size: 22px;
-		margin: 0 0 4px;
-		color: var(--fg);
-	}
-
-	.role {
-		font-family: var(--font-mono);
-		font-size: 10px;
-		letter-spacing: 0.18em;
-		text-transform: uppercase;
-		color: var(--gold);
-		margin: 0 0 14px;
-	}
-
-	.agent-body {
-		font-size: 14.5px;
-		line-height: 1.6;
+	.body {
+		max-height: 0;
+		opacity: 0;
+		overflow: hidden;
 		margin: 0;
-		color: #cfcfcf;
+		transition:
+			max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+			opacity 0.4s,
+			margin 0.4s;
+		overscroll-behavior: contain;
+		scrollbar-width: thin;
+		scrollbar-color: rgba(255, 255, 255, 0.28) transparent;
 	}
 
-	/* Callout */
-	.callout {
-		background: rgba(201, 169, 97, 0.06);
-		border-left: 2px solid var(--gold);
-		padding: 24px 28px;
-		margin-top: 24px;
+	.signal.open .body {
+		opacity: 1;
+		max-height: calc(100vh - 340px);
+		overflow-y: auto;
+		margin: clamp(10px, 1.6vh, 22px) 0 clamp(20px, 3vh, 40px);
 	}
 
-	.callout-title {
-		font-family: var(--font-serif);
-		font-weight: 500;
-		font-size: 22px;
-		margin: 0 0 10px;
-		color: var(--gold-bright);
-	}
-
-	.callout p {
-		margin: 0;
-		font-size: 15.5px;
-	}
-
-	/* Covenant */
-	.covenant {
-		border: 1px dashed var(--rule);
-		padding: 28px 32px;
-	}
-
-	.covenant h3 {
-		font-family: var(--font-serif);
-		font-weight: 500;
-		font-size: 22px;
-		margin: 0 0 14px;
-		color: var(--gold-bright);
-	}
-
-	/* CTA */
-	.cta {
-		text-align: center;
-		padding: 56px 32px;
-		background: linear-gradient(180deg, #050505 0%, #0a0a0a 100%);
-		border: 1px solid var(--rule);
-		margin-top: 88px;
-	}
-
-	.cta-lead {
-		font-family: var(--font-serif);
-		font-size: clamp(26px, 4vw, 34px);
+	.body p {
+		font-family: 'Archivo', system-ui, sans-serif;
 		font-weight: 400;
-		color: var(--fg);
-		margin: 0 0 12px;
-		max-width: none;
+		font-size: 24px;
+		line-height: 1.4;
+		letter-spacing: -0.01em;
+		max-width: 46ch;
+		text-wrap: pretty;
+		margin: 0;
+		color: #fff;
 	}
+	.body p + p { margin-top: 0.85em; }
 
-	.cta-lead em {
-		color: var(--gold);
-	}
-
-	.cta-sub {
-		color: #b8b8b8;
-		margin: 0 auto 32px;
-		max-width: 50ch;
-	}
-
-	.cta-button {
+	.cta-btn {
 		display: inline-block;
-		font-family: var(--font-mono);
-		font-size: 12px;
-		font-weight: 500;
-		letter-spacing: 0.24em;
-		text-transform: uppercase;
-		color: var(--bg);
-		background: var(--gold);
-		padding: 18px 36px;
+		white-space: nowrap;
+		margin-top: clamp(20px, 2.4vh, 32px);
+		padding: 14px 30px;
+		background: #c9a24b;
+		color: #000;
+		font-family: 'Archivo', system-ui, sans-serif;
+		font-weight: 700;
+		font-size: clamp(15px, 1.05vw, 18px);
+		letter-spacing: -0.01em;
+		border-radius: 4px;
+		text-decoration: none;
 		border: none;
-		border-bottom: none;
-		transition: background 0.2s ease, transform 0.2s ease;
+		transition: filter 0.2s, transform 0.2s;
 	}
+	.cta-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+	.cta-btn:active { transform: translateY(0); }
 
-	.cta-button:hover {
-		background: var(--gold-bright);
-		transform: translateY(-1px);
-	}
-
-	.cta-footnote {
-		font-family: var(--font-mono);
-		font-size: 11px;
-		letter-spacing: 0.18em;
-		text-transform: uppercase;
-		color: var(--muted);
-		margin: 28px 0 0;
-	}
-
-	/* Signoff */
-	.signoff {
-		margin-top: 64px;
-	}
-
-	.quote {
-		font-family: var(--font-serif);
-		font-style: italic;
-		font-size: 19px;
-		line-height: 1.55;
-		color: #d8d8d8;
-		max-width: 60ch;
-	}
-
-	.warmly {
-		margin: 36px 0 6px;
-		color: var(--muted);
-	}
-
-	.signature {
-		font-family: var(--font-serif);
-		font-weight: 500;
-		font-size: 26px;
-		color: var(--gold-bright);
-		margin: 0 0 6px;
-	}
-
-	.title-line {
-		font-family: var(--font-mono);
-		font-size: 11px;
-		letter-spacing: 0.22em;
-		text-transform: uppercase;
-		color: var(--muted);
+	.copyright {
+		font-family: 'Archivo', system-ui, sans-serif;
+		font-weight: 700;
+		font-size: clamp(15px, 1.25vw, 20px);
+		letter-spacing: -0.01em;
+		line-height: 1.4;
+		opacity: 0.96;
+		white-space: nowrap;
 		margin: 0;
+		color: #fff;
 	}
 
-	/* Footer */
-	footer {
-		border-top: 1px solid var(--rule);
-		padding: 28px 0;
+	.dot {
+		width: clamp(40px, 3.4vw, 56px);
+		height: clamp(40px, 3.4vw, 56px);
+		border-radius: 50%;
+		background: #fff;
+		border: none;
+		cursor: pointer;
+		transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+		flex-shrink: 0;
 	}
-
-	.footer-row {
-		display: flex;
-		justify-content: space-between;
-		font-family: var(--font-mono);
-		font-size: 11px;
-		letter-spacing: 0.18em;
-		text-transform: uppercase;
-		color: var(--muted);
-	}
+	.dot:hover { transform: scale(1.14); }
+	.dot:active { transform: scale(0.94); }
 
 	@media (max-width: 640px) {
-		.hero {
-			padding: 64px 0 48px;
-		}
-		main {
-			padding: 48px 0 64px;
-		}
-		.agents {
-			grid-template-columns: 1fr;
-		}
-		.covenant {
-			padding: 22px;
-		}
-		.cta {
-			padding: 40px 22px;
-		}
-		.footer-row {
-			flex-direction: column;
-			gap: 8px;
-		}
+		.title { font-size: clamp(26px, 8vw, 40px); }
+		.body p { font-size: clamp(18px, 5vw, 24px); max-width: 34ch; }
+		.signal.open .body { max-height: 82vh; }
 	}
 </style>
