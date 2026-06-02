@@ -193,7 +193,7 @@
 				If this sounds like <em>your kind of room,</em>
 			</p>
 			<p class="cta-sub">we want to meet you. Applications take about ten minutes. We read every one.</p>
-			<a class="cta-button" href="mailto:apply@theferris.co?subject=Application%20to%20The%20Ferris">
+			<a class="cta-button" href="https://docs.google.com/forms/d/e/1FAIpQLScxNdNvgCRyxL_oNG2zxTR9NFFJT9FYp28g4NtTg8_X6Y6Ymw/viewform?usp=sharing&ouid=105812463017049232697" target="_blank" rel="noopener noreferrer">
 				Apply to join
 			</a>
 			<p class="cta-footnote">Rolling admissions · Limited memberships</p>
