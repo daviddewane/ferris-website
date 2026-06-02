@@ -32,9 +32,6 @@
 		}
 	];
 
-	const CTA_HREF =
-		'https://docs.google.com/forms/d/e/1FAIpQLScxNdNvgCRyxL_oNG2zxTR9NFFJT9FYp28g4NtTg8_X6Y6Ymw/viewform?usp=sharing&ouid=105812463017049232697';
-
 	let open: number | null = $state(null);
 
 	function toggle(idx: number) {
@@ -43,6 +40,45 @@
 
 	function handleKey(e: KeyboardEvent) {
 		if (e.key === 'Escape') { open = null; }
+	}
+
+	// Form state
+	let formState: 'idle' | 'submitting' | 'success' | 'error' = $state('idle');
+	let name = $state('');
+	let email = $state('');
+	let linkedin = $state('');
+	let builtRecently = $state('');
+	let builtDescription = $state('');
+	let communityBenefit = $state('');
+	let communityLooking = $state('');
+	let aiRole = $state('');
+	let aiRoleOther = $state('');
+	let uniqueContribution = $state('');
+
+	async function submitForm(e: Event) {
+		e.preventDefault();
+		formState = 'submitting';
+		try {
+			const res = await fetch('/api/apply', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					name,
+					email,
+					linkedin,
+					builtRecently,
+					builtDescription,
+					communityBenefit,
+					communityLooking,
+					aiRole: aiRole === 'Other' ? `Other: ${aiRoleOther}` : aiRole,
+					uniqueContribution,
+				}),
+			});
+			const data = await res.json();
+			formState = data.success ? 'success' : 'error';
+		} catch {
+			formState = 'error';
+		}
 	}
 </script>
 
@@ -59,7 +95,7 @@
 				class:dimmed={open !== null && open !== i}
 				role="button"
 				tabindex="0"
-				onclick={(e) => { if ((e.target as HTMLElement).closest('a')) return; toggle(i); }}
+				onclick={(e) => { if ((e.target as HTMLElement).closest('a,button,input,textarea,label,select')) return; toggle(i); }}
 				onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(i); } }}
 			>
 				<div class="title" class:gold={signal.gold}>{signal.title}</div>
@@ -68,7 +104,74 @@
 						<p>{para}</p>
 					{/each}
 					{#if signal.cta}
-						<a class="cta-btn" href={CTA_HREF} target="_blank" rel="noopener">Apply to join</a>
+						{#if formState === 'success'}
+							<p class="form-success">Application received — we'll be in touch.</p>
+						{:else}
+							<form onsubmit={submitForm} class="apply-form">
+								<div class="field">
+									<label for="f-name">Name <span class="req">*</span></label>
+									<input id="f-name" type="text" bind:value={name} required autocomplete="name" />
+								</div>
+
+								<div class="field">
+									<label for="f-email">Email <span class="req">*</span></label>
+									<input id="f-email" type="email" bind:value={email} required autocomplete="email" />
+								</div>
+
+								<div class="field">
+									<label for="f-linkedin">LinkedIn</label>
+									<input id="f-linkedin" type="url" bind:value={linkedin} placeholder="https://linkedin.com/in/…" autocomplete="url" />
+								</div>
+
+								<div class="field">
+									<p class="field-label">Have you built anything in the last 6 months? <span class="req">*</span></p>
+									<label class="radio"><input type="radio" bind:group={builtRecently} value="Yes" required /> Yes</label>
+									<label class="radio"><input type="radio" bind:group={builtRecently} value="No" /> No</label>
+								</div>
+
+								<div class="field">
+									<label for="f-built">If yes, please describe what you built</label>
+									<textarea id="f-built" bind:value={builtDescription} rows="3"></textarea>
+								</div>
+
+								<div class="field">
+									<p class="field-label">Would your work benefit greatly from an in-person work/development community? <span class="req">*</span></p>
+									<label class="radio"><input type="radio" bind:group={communityBenefit} value="Yes" required /> Yes</label>
+									<label class="radio"><input type="radio" bind:group={communityBenefit} value="Not Really" /> Not Really</label>
+								</div>
+
+								<div class="field">
+									<label for="f-community">What are you looking for from an in-person work community?</label>
+									<textarea id="f-community" bind:value={communityLooking} rows="3"></textarea>
+								</div>
+
+								<div class="field">
+									<p class="field-label">Who are you in AI? <span class="req">*</span></p>
+									<label class="radio"><input type="radio" bind:group={aiRole} value="Researcher" required /> Researcher</label>
+									<label class="radio"><input type="radio" bind:group={aiRole} value="Builder" /> Builder</label>
+									<label class="radio"><input type="radio" bind:group={aiRole} value="Thinker" /> Thinker</label>
+									<label class="radio"><input type="radio" bind:group={aiRole} value="Consumer" /> Consumer</label>
+									<label class="radio"><input type="radio" bind:group={aiRole} value="Other" /> Other:
+										{#if aiRole === 'Other'}
+											<input class="inline-other" type="text" bind:value={aiRoleOther} placeholder="describe…" />
+										{/if}
+									</label>
+								</div>
+
+								<div class="field">
+									<label for="f-unique">What would you contribute to a room of 30 other elite builders that no one else in that room could?</label>
+									<textarea id="f-unique" bind:value={uniqueContribution} rows="3"></textarea>
+								</div>
+
+								{#if formState === 'error'}
+									<p class="form-error">Something went wrong. Please try again.</p>
+								{/if}
+
+								<button class="cta-btn" type="submit" disabled={formState === 'submitting'}>
+									{formState === 'submitting' ? 'Sending…' : 'Apply to join'}
+								</button>
+							</form>
+						{/if}
 					{/if}
 				</div>
 			</div>
@@ -142,7 +245,7 @@
 
 	.signal.open .body {
 		opacity: 1;
-		max-height: 80vh;
+		max-height: 1200px;
 		margin: clamp(10px, 1.6vh, 22px) 0 clamp(20px, 3vh, 40px);
 	}
 
@@ -159,10 +262,94 @@
 	}
 	.body p + p { margin-top: 0.85em; }
 
+	/* Form */
+	.apply-form {
+		margin-top: clamp(20px, 2.4vh, 32px);
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		max-width: 520px;
+	}
+
+	.field {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+
+	.field label,
+	.field-label {
+		font-family: 'Archivo', system-ui, sans-serif;
+		font-weight: 600;
+		font-size: clamp(14px, 1vw, 16px);
+		color: #fff;
+		margin: 0;
+		text-wrap: balance;
+	}
+
+	.req { color: #c9a24b; }
+
+	.field input[type="text"],
+	.field input[type="email"],
+	.field input[type="url"],
+	.field textarea {
+		background: transparent;
+		border: none;
+		border-bottom: 1px solid rgba(255,255,255,0.3);
+		color: #fff;
+		font-family: 'Archivo', system-ui, sans-serif;
+		font-size: clamp(14px, 1vw, 16px);
+		padding: 8px 0;
+		outline: none;
+		transition: border-color 0.2s;
+		resize: vertical;
+	}
+
+	.field input[type="text"]:focus,
+	.field input[type="email"]:focus,
+	.field input[type="url"]:focus,
+	.field textarea:focus {
+		border-bottom-color: #c9a24b;
+	}
+
+	.field input::placeholder,
+	.field textarea::placeholder {
+		color: rgba(255,255,255,0.3);
+	}
+
+	.radio {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-family: 'Archivo', system-ui, sans-serif;
+		font-size: clamp(14px, 1vw, 16px);
+		color: #fff;
+		cursor: pointer;
+	}
+
+	.radio input[type="radio"] {
+		accent-color: #c9a24b;
+		width: 16px;
+		height: 16px;
+		cursor: pointer;
+	}
+
+	.inline-other {
+		background: transparent;
+		border: none;
+		border-bottom: 1px solid rgba(255,255,255,0.3);
+		color: #fff;
+		font-family: 'Archivo', system-ui, sans-serif;
+		font-size: clamp(13px, 0.9vw, 15px);
+		padding: 2px 4px;
+		outline: none;
+		width: 160px;
+	}
+
 	.cta-btn {
 		display: inline-block;
 		white-space: nowrap;
-		margin-top: clamp(20px, 2.4vh, 32px);
+		margin-top: clamp(4px, 1vh, 12px);
 		padding: 14px 30px;
 		background: #c9a24b;
 		color: #000;
@@ -173,10 +360,27 @@
 		border-radius: 4px;
 		text-decoration: none;
 		border: none;
-		transition: filter 0.2s, transform 0.2s;
+		cursor: pointer;
+		transition: filter 0.2s, transform 0.2s, opacity 0.2s;
+		align-self: flex-start;
 	}
 	.cta-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
 	.cta-btn:active { transform: translateY(0); }
+	.cta-btn:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+	.form-success {
+		font-family: 'Archivo', system-ui, sans-serif;
+		font-size: clamp(16px, 1.2vw, 20px);
+		color: #c9a24b;
+		margin-top: clamp(20px, 2.4vh, 32px);
+	}
+
+	.form-error {
+		font-family: 'Archivo', system-ui, sans-serif;
+		font-size: clamp(13px, 0.9vw, 15px);
+		color: #e07070;
+		margin: 0;
+	}
 
 	.copyright {
 		font-family: 'Archivo', system-ui, sans-serif;
@@ -193,5 +397,6 @@
 	@media (max-width: 640px) {
 		.title { font-size: clamp(26px, 8vw, 40px); }
 		.body p { font-size: clamp(18px, 5vw, 24px); max-width: 34ch; }
+		.apply-form { max-width: 100%; }
 	}
 </style>
