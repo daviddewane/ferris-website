@@ -41,19 +41,20 @@
 	let rowEls: HTMLElement[] = $state([]);
 	let translateY = $state(0);
 
-	function getTranslate(idx: number | null) {
-		if (idx === null || !rowEls[idx]) return 0;
-		return -rowEls[idx].offsetTop;
-	}
+	$effect(() => {
+		// Recalculate translateY whenever open or rowEls changes, including after mount
+		void rowEls.length;
+		translateY = open !== null && rowEls[open] ? -rowEls[open].offsetTop : 0;
+	});
 
 	function setOpen(idx: number | null) {
 		open = idx;
-		translateY = getTranslate(open);
 		localStorage.setItem('ferris.signals.open', open === null ? '' : String(open));
 	}
 
 	function toggle(idx: number) {
-		setOpen(open === idx ? null : idx);
+		// Always open the clicked section; only Escape / dot cycling closes all
+		setOpen(idx);
 	}
 
 	function advance() {
@@ -79,7 +80,6 @@
 			const idx = parseInt(saved, 10);
 			if (!isNaN(idx) && idx >= 0 && idx < SIGNALS.length) {
 				open = idx;
-				requestAnimationFrame(() => { translateY = getTranslate(open); });
 			}
 		}
 	});
