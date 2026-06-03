@@ -246,7 +246,7 @@
 
 	.signal.open .body {
 		opacity: 1;
-		max-height: 1200px;
+		max-height: 2400px;
 		margin: clamp(10px, 1.6vh, 22px) 0 clamp(20px, 3vh, 40px);
 	}
 
