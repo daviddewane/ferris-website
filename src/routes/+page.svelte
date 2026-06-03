@@ -167,9 +167,6 @@
 									<p class="form-error">Something went wrong. Please try again.</p>
 								{/if}
 
-								<button class="cta-btn" type="submit" disabled={formState === 'submitting'}>
-									{formState === 'submitting' ? 'Sending…' : 'Apply to join'}
-								</button>
 							</form>
 						{/if}
 					{/if}
