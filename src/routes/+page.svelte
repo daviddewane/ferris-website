@@ -96,7 +96,7 @@
 				role="button"
 				tabindex="0"
 				onclick={(e) => { if ((e.target as HTMLElement).closest('a,button,input,textarea,label,select')) return; toggle(i); }}
-				onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(i); } }}
+				onkeydown={(e) => { const t = e.target as HTMLElement; if (t.closest('input,textarea,button')) return; if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(i); } }}
 			>
 				<div class="title" class:gold={signal.gold}>{signal.title}</div>
 				<div class="body">
@@ -294,15 +294,15 @@
 	.field input[type="email"],
 	.field input[type="url"],
 	.field textarea {
-		background: transparent;
+		background: #fff;
 		border: none;
-		border-bottom: 1px solid rgba(255,255,255,0.3);
-		color: #fff;
+		border-radius: 3px;
+		color: #000;
 		font-family: 'Archivo', system-ui, sans-serif;
 		font-size: clamp(14px, 1vw, 16px);
-		padding: 8px 0;
+		padding: 10px 12px;
 		outline: none;
-		transition: border-color 0.2s;
+		transition: box-shadow 0.2s;
 		resize: vertical;
 	}
 
@@ -310,12 +310,12 @@
 	.field input[type="email"]:focus,
 	.field input[type="url"]:focus,
 	.field textarea:focus {
-		border-bottom-color: #c9a24b;
+		box-shadow: 0 0 0 2px #c9a24b;
 	}
 
 	.field input::placeholder,
 	.field textarea::placeholder {
-		color: rgba(255,255,255,0.3);
+		color: rgba(0,0,0,0.35);
 	}
 
 	.radio {
