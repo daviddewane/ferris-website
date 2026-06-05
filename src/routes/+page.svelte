@@ -1,47 +1,4 @@
 <script lang="ts">
-	const SIGNALS = [
-		{
-			title: 'The Ferris',
-			gold: true,
-			body: `The Ferris is a members club in Chicago for people building companies at the frontiers of technology. AI is in its earliest innings and the most interesting work is being done by people who think like mad scientists. We built a place for you to do it.`
-		},
-		{
-			title: 'What we believe',
-			body: `We believe AI is too important to learn alone. The people getting good at it are the ones surrounded by other builders.\n\nWe believe the space can be a collaborator. The environment can help you optimize your personal performance, build community bonds, and leverage AI agents to help you become more intelligent.\n\nAnd we believe the future of AI doesn't belong to whoever buys the most compute. It belongs to whoever learns to use it well, together.`
-		},
-		{
-			title: 'Who is this for',
-			body: `You come to The Ferris because you're building something with AI and you want to be near other people doing the same.\n\nYou come here because you sense AI is going to reshape your work and you'd rather get ahead of it than fall behind.\n\nYou don't need to be a researcher. You don't need a finished company. You need to be curious, generous with what you know, and a little bit obsessed with what AI is about to make possible.`
-		},
-		{
-			title: 'What you get',
-			body: `The Ferris is, first, a beautiful place to work — designed by some of the best workplace and hospitality architects we've ever met, in the heart of downtown Chicago.\n\nIt's also something more. The building runs its own AI infrastructure on-site. Every member receives access to a personal assistant we call Ferris — an AI that learns the rhythms of your days, the activities of our community, and optimizes the use of our building.`
-		},
-		{
-			title: 'What we ask',
-			body: `Membership at The Ferris is reciprocal. You don't just use what we've built, you make it better.\n\nEvery member contributes back. Sharing what worked. Correcting Ferris when it gets things wrong. The building gets smarter because you're in it, and the next member who walks in inherits the wisdom of everyone who came before.`
-		},
-		{
-			title: 'The honest part',
-			body: `A building that responds to how you work needs to know how you work. The Ferris is instrumented — cameras at sightlines, sensors that read the rhythms of the floor, signals from how the space is used. Members opt in to this with a clear, written waiver. Private zones stay private. Data is aggregated, not personalized for surveillance.\n\nIn return, you get a stake. The AI layer that gets smarter because you helped train it — and members are the first to benefit from it. If that tradeoff isn't for you, there are plenty of other places to work. The Ferris is for people who want to be part of the experiment.`
-		},
-		{
-			title: 'Apply',
-			cta: true,
-			body: `The Ferris has limited capacity and accepts new members as spots become available. We optimize for people with talent, ambition, a willingness to be supportive of peers, and a high level of awareness regarding emerging trends.`
-		}
-	];
-
-	let open: number | null = $state(null);
-
-	function toggle(idx: number) {
-		open = open === idx ? null : idx;
-	}
-
-	function handleKey(e: KeyboardEvent) {
-		if (e.key === 'Escape') { open = null; }
-	}
-
 	// Form state
 	let formState: 'idle' | 'submitting' | 'success' | 'error' = $state('idle');
 	let name = $state('');
@@ -54,6 +11,8 @@
 	let aiRole = $state('');
 	let aiRoleOther = $state('');
 	let uniqueContribution = $state('');
+
+	let showForm = $state(false);
 
 	async function submitForm(e: Event) {
 		e.preventDefault();
@@ -82,322 +41,433 @@
 	}
 </script>
 
-<svelte:window onkeydown={handleKey} />
+<svelte:head>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+	<link href="https://fonts.googleapis.com/css2?family=Anton&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet" />
+</svelte:head>
 
-<div class="chrome top"></div>
+{#if !showForm}
+	<!-- ── Letter page ── -->
+	<main class="sheet">
+		<header class="masthead">
+			<div class="wordmark">Ferris<div class="bar"></div></div>
+			<div class="meta">
+				<span>June 2026</span>
+				<span>1 W Monroe Street</span>
+				<span>Chicago, IL</span>
+			</div>
+		</header>
 
-<main>
-	<div class="list">
-		{#each SIGNALS as signal, i}
-			<div
-				class="signal"
-				class:open={open === i}
-				class:dimmed={open !== null && open !== i}
-				role="button"
-				tabindex="0"
-				onclick={(e) => { if ((e.target as HTMLElement).closest('a,button,input,textarea,label,select')) return; toggle(i); }}
-				onkeydown={(e) => { const t = e.target as HTMLElement; if (t.closest('input,textarea,button')) return; if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(i); } }}
-			>
-				<div class="title" class:gold={signal.gold}>{signal.title}</div>
-				<div class="body">
-					{#each signal.body.split('\n\n') as para}
-						<p>{para}</p>
-					{/each}
-					{#if signal.cta}
-						{#if formState === 'success'}
-							<p class="form-success">Application received — we'll be in touch.</p>
-						{:else}
-							<form onsubmit={submitForm} class="apply-form">
-								<div class="field">
-									<label for="f-name">Name <span class="req">*</span></label>
-									<input id="f-name" type="text" bind:value={name} required autocomplete="name" />
-								</div>
+		<p class="lead">Once upon a time you worked with people you trusted, in a place that made you better, on problems worth solving. We think it&rsquo;s that time again.</p>
 
-								<div class="field">
-									<label for="f-email">Email <span class="req">*</span></label>
-									<input id="f-email" type="email" bind:value={email} required autocomplete="email" />
-								</div>
+		<p class="pitch">Introducing <strong>The Ferris</strong>, a members club in Chicago for people building at the frontiers of AI. You work in a beautiful building, in the heart of the city. You get your own AI assistant &mdash; we call it <em>Ferris</em> &mdash; and the space learns how you work and helps you work better. And you join a community of builders who make each other smarter.</p>
 
-								<div class="field">
-									<label for="f-linkedin">LinkedIn</label>
-									<input id="f-linkedin" type="url" bind:value={linkedin} placeholder="https://linkedin.com/in/…" autocomplete="url" />
-								</div>
+		<p>The Ferris runs on three things:</p>
 
-								<div class="field">
-									<p class="field-label">Have you built anything in the last 6 months? <span class="req">*</span></p>
-									<label class="radio"><input type="radio" bind:group={builtRecently} value="Yes" required /> Yes</label>
-									<label class="radio"><input type="radio" bind:group={builtRecently} value="No" /> No</label>
-								</div>
+		<ul>
+			<li><span class="dash">&mdash;</span><span><b>Wellness:</b> Ferris keeps you sharp through movement, rest, recovery.</span></li>
+			<li><span class="dash">&mdash;</span><span><b>Tools:</b> Best-in-class AI, integrated into your workflow.</span></li>
+			<li><span class="dash">&mdash;</span><span><b>Community Trained:</b> The more you contribute, the smarter it gets for everyone.</span></li>
+		</ul>
 
-								<div class="field">
-									<label for="f-built">If yes, please describe what you built</label>
-									<textarea id="f-built" bind:value={builtDescription} rows="3"></textarea>
-								</div>
+		<p>We were among the early people asking what work could look like if you actually designed it well. Now, we intend to help build what comes next. The post-isolation era is just around the corner.</p>
 
-								<div class="field">
-									<p class="field-label">Would your work benefit greatly from an in-person work/development community? <span class="req">*</span></p>
-									<label class="radio"><input type="radio" bind:group={communityBenefit} value="Yes" required /> Yes</label>
-									<label class="radio"><input type="radio" bind:group={communityBenefit} value="Not Really" /> Not Really</label>
-								</div>
+		<p>If this sounds like your kind of room, we want to meet you. Applications take about ten minutes. We read every one. Membership is limited. We optimize for talent, ambition, generosity, and a deep curiosity about what&rsquo;s coming next.</p>
 
-								<div class="field">
-									<label for="f-community">What are you looking for from an in-person work community?</label>
-									<textarea id="f-community" bind:value={communityLooking} rows="3"></textarea>
-								</div>
-
-								<div class="field">
-									<p class="field-label">Who are you in AI? <span class="req">*</span></p>
-									<label class="radio"><input type="radio" bind:group={aiRole} value="Researcher" required /> Researcher</label>
-									<label class="radio"><input type="radio" bind:group={aiRole} value="Builder" /> Builder</label>
-									<label class="radio"><input type="radio" bind:group={aiRole} value="Thinker" /> Thinker</label>
-									<label class="radio"><input type="radio" bind:group={aiRole} value="Consumer" /> Consumer</label>
-									<label class="radio"><input type="radio" bind:group={aiRole} value="Other" /> Other:
-										{#if aiRole === 'Other'}
-											<input class="inline-other" type="text" bind:value={aiRoleOther} placeholder="describe…" />
-										{/if}
-									</label>
-								</div>
-
-								<div class="field">
-									<label for="f-unique">What would you contribute to a room of 30 other elite builders that no one else in that room could?</label>
-									<textarea id="f-unique" bind:value={uniqueContribution} rows="3"></textarea>
-								</div>
-
-								{#if formState === 'error'}
-									<p class="form-error">Something went wrong. Please try again.</p>
-								{/if}
-
-								<button class="cta-btn" type="submit" disabled={formState === 'submitting'}>
-									{formState === 'submitting' ? 'Sending…' : 'Submit'}
-								</button>
-
-</form>
-						{/if}
-					{/if}
+		<div class="signoff">
+			<div class="team">The Ferris Team</div>
+			<div class="sigs">
+				<div class="sig">
+					<div class="sig-img"><img src="/sigs/sig-anuraag-v2.png" alt="Anuraag" /></div>
+					<div class="name">Anuraag</div>
+				</div>
+				<div class="sig">
+					<div class="sig-img"><img src="/sigs/sig-david-v2.png" alt="David" /></div>
+					<div class="name">David</div>
+				</div>
+				<div class="sig">
+					<div class="sig-img"><img src="/sigs/sig-rox-v2.png" alt="Rox" /></div>
+					<div class="name">Rox</div>
+				</div>
+				<div class="sig">
+					<div class="sig-img"><img src="/sigs/sig-sarah-v2.png" alt="Sarah" /></div>
+					<div class="name">Sarah</div>
 				</div>
 			</div>
-		{/each}
-	</div>
-</main>
+			<button class="apply" onclick={() => showForm = true}>Apply Now</button>
+		</div>
+	</main>
 
-<div class="chrome bottom">
-	<p class="copyright">1 W Monroe, Chicago IL<br />© 2026 The Ferris</p>
-</div>
+{:else if formState === 'success'}
+	<!-- ── Thank you ── -->
+	<main class="sheet">
+		<header class="masthead">
+			<button class="wordmark wordmark-btn" onclick={() => { showForm = false; formState = 'idle'; }}>Ferris<div class="bar"></div></button>
+		</header>
+		<div class="thankyou">
+			<h2>Thank you.</h2>
+			<p>Your application is on its way. We read every one and will be in touch if there&rsquo;s a fit.</p>
+			<button class="apply back-apply" onclick={() => { showForm = false; formState = 'idle'; }}>Back to the letter</button>
+		</div>
+	</main>
+
+{:else}
+	<!-- ── Application form ── -->
+	<main class="sheet">
+		<header class="masthead">
+			<button class="wordmark wordmark-btn" onclick={() => showForm = false}>Ferris<div class="bar"></div></button>
+		</header>
+
+		<div class="form-intro">
+			<h1>Apply for Membership</h1>
+			<p class="form-sub">Takes about ten minutes. We read every one.</p>
+		</div>
+
+		<form onsubmit={submitForm} class="apply-form" novalidate>
+
+			<div class="field">
+				<label for="f-name">Name <span class="req">*</span></label>
+				<input id="f-name" type="text" bind:value={name} required autocomplete="name" />
+			</div>
+
+			<div class="field">
+				<label for="f-email">Email <span class="req">*</span></label>
+				<input id="f-email" type="email" bind:value={email} required autocomplete="email" />
+			</div>
+
+			<div class="field">
+				<label for="f-linkedin">LinkedIn</label>
+				<input id="f-linkedin" type="url" bind:value={linkedin} placeholder="https://linkedin.com/in/…" autocomplete="url" />
+			</div>
+
+			<hr class="rule" />
+
+			<div class="field">
+				<p class="field-label">Have you built anything in the last 6 months? <span class="req">*</span></p>
+				<label class="radio"><input type="radio" bind:group={builtRecently} value="Yes" required /> Yes</label>
+				<label class="radio"><input type="radio" bind:group={builtRecently} value="No" /> No</label>
+			</div>
+
+			{#if builtRecently === 'Yes'}
+				<div class="field">
+					<label for="f-built">If yes, please describe what you built</label>
+					<textarea id="f-built" bind:value={builtDescription} rows="3" placeholder="Tell us what you shipped…"></textarea>
+				</div>
+			{/if}
+
+			<div class="field">
+				<p class="field-label">Would your work benefit greatly from an in-person work / development community? <span class="req">*</span></p>
+				<label class="radio"><input type="radio" bind:group={communityBenefit} value="Yes" required /> Yes</label>
+				<label class="radio"><input type="radio" bind:group={communityBenefit} value="Not Really" /> Not Really</label>
+			</div>
+
+			{#if communityBenefit === 'Yes'}
+				<div class="field">
+					<label for="f-community">What are you looking for from an in-person work community?</label>
+					<textarea id="f-community" bind:value={communityLooking} rows="3" placeholder="What would make it valuable for you…"></textarea>
+				</div>
+			{/if}
+
+			<div class="field">
+				<p class="field-label">Who are you in AI? <span class="req">*</span></p>
+				<label class="radio"><input type="radio" bind:group={aiRole} value="Researcher" required /> Researcher</label>
+				<label class="radio"><input type="radio" bind:group={aiRole} value="Builder" /> Builder</label>
+				<label class="radio"><input type="radio" bind:group={aiRole} value="Thinker" /> Thinker</label>
+				<label class="radio"><input type="radio" bind:group={aiRole} value="Consumer" /> Consumer</label>
+				<label class="radio">
+					<input type="radio" bind:group={aiRole} value="Other" />
+					Other:
+					{#if aiRole === 'Other'}
+						<input class="inline-other" type="text" bind:value={aiRoleOther} placeholder="describe yourself" />
+					{/if}
+				</label>
+			</div>
+
+			<div class="field">
+				<label for="f-unique">What would you contribute to a room of 30 other elite builders that no one else in that room could? <span class="req">*</span></label>
+				<textarea id="f-unique" bind:value={uniqueContribution} rows="3" required placeholder="Your unique edge…"></textarea>
+			</div>
+
+			{#if formState === 'error'}
+				<p class="form-error">Something went wrong — please try again.</p>
+			{/if}
+
+			<div class="submit-row">
+				<button class="apply submit-btn" type="submit" disabled={formState === 'submitting'}>
+					{formState === 'submitting' ? 'Sending…' : 'Submit Application'}
+				</button>
+			</div>
+
+		</form>
+	</main>
+{/if}
 
 <style>
-	:global(html, body) {
-		overflow-x: hidden;
+	:global(body) {
+		background: #1f1f1f;
+		color: #f4f1ea;
+		font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
 	}
 
-	.chrome {
-		position: fixed;
-		left: 0;
-		right: 0;
-		height: clamp(72px, 9vh, 104px);
-		padding: 0 clamp(28px, 4vw, 64px);
-		display: flex;
-		align-items: center;
-		z-index: 10;
-		background: #000;
-	}
-	.chrome.top { top: 0; }
-	.chrome.bottom { bottom: 0; }
-
-	main {
-		padding-top: clamp(72px, 9vh, 104px);
-		padding-bottom: clamp(72px, 9vh, 104px);
+	.sheet {
+		max-width: 660px;
+		margin: 0 auto;
+		padding: 96px 40px 120px;
 	}
 
-	.list {
-		padding: clamp(20px, 3.5vh, 48px) clamp(28px, 4vw, 64px);
-	}
-
-	.signal {
-		cursor: pointer;
-		width: 100%;
-	}
-
-	.title {
-		font-family: 'Archivo', system-ui, sans-serif;
-		font-weight: 800;
-		font-size: clamp(28px, 4.4vw, 58px);
-		letter-spacing: -0.035em;
-		line-height: 1.02;
-		text-wrap: balance;
-		color: #fff;
-		transition: opacity 0.35s ease;
-	}
-	.title:hover { opacity: 0.62; }
-	.title.gold { color: #c9a24b; }
-
-	.signal.dimmed .title { opacity: 0.4; }
-	.signal.dimmed .title:hover { opacity: 0.7; }
-
-	.body {
-		max-height: 0;
-		opacity: 0;
-		overflow: hidden;
-		margin: 0;
-		transition:
-			max-height 0.55s cubic-bezier(0.4, 0, 0.2, 1),
-			opacity 0.4s,
-			margin 0.4s;
-	}
-
-	.signal.open .body {
-		opacity: 1;
-		max-height: 2400px;
-		margin: clamp(10px, 1.6vh, 22px) 0 clamp(20px, 3vh, 40px);
-	}
-
-	.body p {
-		font-family: 'Archivo', system-ui, sans-serif;
-		font-weight: 400;
-		font-size: 24px;
-		line-height: 1.4;
-		letter-spacing: -0.01em;
-		max-width: 46ch;
-		text-wrap: pretty;
-		margin: 0;
-		color: #fff;
-	}
-	.body p + p { margin-top: 0.85em; }
-
-	/* Form */
-	.apply-form {
-		margin-top: clamp(20px, 2.4vh, 32px);
+	/* ── Letterhead ── */
+	.masthead {
 		display: flex;
 		flex-direction: column;
-		gap: 20px;
-		max-width: 520px;
+		align-items: flex-start;
+		margin-bottom: 54px;
+	}
+	.wordmark {
+		font-family: "Anton", "Arial Narrow", sans-serif;
+		font-weight: 400;
+		font-size: 76px;
+		line-height: 0.86;
+		color: #f1a93f;
+		letter-spacing: 0.03em;
+		text-transform: uppercase;
+	}
+	.wordmark-btn {
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		display: block;
+		text-align: left;
+	}
+	.bar {
+		width: 104px;
+		height: 4px;
+		background: #f1a93f;
+		margin-top: 20px;
+	}
+	.meta {
+		margin-top: 34px;
+		color: #f1a93f;
+		font-size: 13.5px;
+		letter-spacing: 0.13em;
+		text-transform: uppercase;
+		line-height: 2;
+	}
+	.meta span { display: block; white-space: nowrap; }
+
+	/* ── Body ── */
+	p {
+		margin: 0 0 22px;
+		font-size: 19px;
+	}
+	.lead { font-size: 20px; }
+	.pitch { font-size: 20px; margin: 30px 0 26px; }
+
+	strong { font-weight: 600; color: #fff; }
+	em { color: #f1a93f; font-style: italic; }
+
+	ul {
+		list-style: none;
+		margin: 0 0 26px;
+		padding: 0;
+	}
+	li {
+		display: flex;
+		gap: 14px;
+		font-size: 19px;
+		margin-bottom: 13px;
+	}
+	.dash { color: #f1a93f; flex: 0 0 auto; user-select: none; }
+	li b { font-weight: 600; color: #fff; }
+
+	/* ── Signoff ── */
+	.signoff { margin-top: 58px; }
+	.team {
+		color: #9a958c;
+		font-size: 15px;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		margin-bottom: 30px;
+	}
+	.sigs {
+		display: flex;
+		align-items: flex-end;
+		gap: 18px;
+		flex-wrap: wrap;
+	}
+	.sig {
+		flex: 1 1 0;
+		min-width: 120px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+	.sig-img {
+		height: 86px;
+		display: flex;
+		align-items: flex-end;
+	}
+	.sig-img img {
+		max-height: 86px;
+		max-width: 100%;
+		width: auto;
+		display: block;
+		opacity: 0.94;
+	}
+	.name {
+		margin-top: 14px;
+		padding-top: 12px;
+		border-top: 1px solid rgba(244,241,234,0.14);
+		width: 100%;
+		font-size: 16px;
+		color: #f4f1ea;
+		letter-spacing: 0.02em;
+	}
+
+	/* ── CTA button ── */
+	.apply {
+		display: inline-block;
+		margin-top: 52px;
+		background: #f1a93f;
+		color: #1a1a1a;
+		font-family: "Source Serif 4", Georgia, "Times New Roman", serif;
+		font-weight: 700;
+		font-size: 15px;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		text-decoration: none;
+		padding: 16px 34px;
+		border-radius: 2px;
+		white-space: nowrap;
+		border: none;
+		cursor: pointer;
+		transition: background 0.18s ease, transform 0.18s ease;
+	}
+	.apply:hover { background: #f7bd5e; transform: translateY(-1px); }
+	.apply:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+	/* ── Thank you ── */
+	.thankyou { padding-top: 20px; }
+	.thankyou h2 {
+		font-family: "Source Serif 4", Georgia, serif;
+		font-weight: 600;
+		font-size: 26px;
+		color: #fff;
+		margin: 0 0 14px;
+	}
+	.back-apply { margin-top: 32px; }
+
+	/* ── Form ── */
+	.form-intro { margin-bottom: 46px; }
+	.form-intro h1 {
+		font-family: "Source Serif 4", Georgia, serif;
+		font-weight: 600;
+		font-size: 26px;
+		color: #fff;
+		margin: 0 0 10px;
+	}
+	.form-sub { font-size: 17px; color: #9a958c; margin: 0; }
+
+	.apply-form {
+		display: flex;
+		flex-direction: column;
+		gap: 28px;
 	}
 
 	.field {
 		display: flex;
 		flex-direction: column;
-		gap: 6px;
+		gap: 8px;
 	}
-
 	.field label,
 	.field-label {
-		font-family: 'Archivo', system-ui, sans-serif;
-		font-weight: 600;
-		font-size: clamp(14px, 1vw, 16px);
-		color: #fff;
+		font-size: 17px;
+		color: #f4f1ea;
 		margin: 0;
-		text-wrap: balance;
 	}
-
-	.req { color: #c9a24b; }
+	.req { color: #f1a93f; margin-left: 3px; }
 
 	.field input[type="text"],
 	.field input[type="email"],
 	.field input[type="url"],
 	.field textarea {
-		background: #fff;
-		border: none;
+		background: rgba(244,241,234,0.06);
+		border: 1px solid rgba(244,241,234,0.22);
 		border-radius: 3px;
-		color: #000;
-		font-family: 'Archivo', system-ui, sans-serif;
-		font-size: clamp(14px, 1vw, 16px);
-		padding: 10px 12px;
+		color: #f4f1ea;
+		font-family: "Source Serif 4", Georgia, serif;
+		font-size: 16px;
+		padding: 12px 14px;
 		outline: none;
-		transition: box-shadow 0.2s;
+		transition: border-color 0.15s;
 		resize: vertical;
 	}
-
-	.field input[type="text"]:focus,
-	.field input[type="email"]:focus,
-	.field input[type="url"]:focus,
-	.field textarea:focus {
-		box-shadow: 0 0 0 2px #c9a24b;
-	}
-
+	.field input:focus,
+	.field textarea:focus { border-color: #f1a93f; }
 	.field input::placeholder,
-	.field textarea::placeholder {
-		color: rgba(0,0,0,0.35);
-	}
+	.field textarea::placeholder { color: #9a958c; }
 
 	.radio {
 		display: flex;
 		align-items: center;
-		gap: 8px;
-		font-family: 'Archivo', system-ui, sans-serif;
-		font-size: clamp(14px, 1vw, 16px);
-		color: #fff;
+		gap: 10px;
+		font-size: 16px;
+		color: #f4f1ea;
 		cursor: pointer;
 	}
-
 	.radio input[type="radio"] {
-		accent-color: #c9a24b;
-		width: 16px;
-		height: 16px;
+		appearance: none;
+		-webkit-appearance: none;
+		width: 18px;
+		height: 18px;
+		border: 1.5px solid rgba(244,241,234,0.22);
+		border-radius: 50%;
+		flex: 0 0 18px;
+		position: relative;
 		cursor: pointer;
+		transition: border-color 0.15s;
+	}
+	.radio input[type="radio"]:checked { border-color: #f1a93f; }
+	.radio input[type="radio"]:checked::after {
+		content: "";
+		position: absolute;
+		top: 50%; left: 50%;
+		transform: translate(-50%, -50%);
+		width: 8px; height: 8px;
+		border-radius: 50%;
+		background: #f1a93f;
 	}
 
 	.inline-other {
 		background: transparent;
 		border: none;
-		border-bottom: 1px solid rgba(255,255,255,0.3);
-		color: #fff;
-		font-family: 'Archivo', system-ui, sans-serif;
-		font-size: clamp(13px, 0.9vw, 15px);
+		border-bottom: 1px solid rgba(244,241,234,0.3);
+		color: #f4f1ea;
+		font-family: "Source Serif 4", Georgia, serif;
+		font-size: 15px;
 		padding: 2px 4px;
 		outline: none;
 		width: 160px;
 	}
 
-	.cta-btn {
-		display: inline-block;
-		white-space: nowrap;
-		margin-top: clamp(4px, 1vh, 12px);
-		padding: 14px 30px;
-		background: #c9a24b;
-		color: #000;
-		font-family: 'Archivo', system-ui, sans-serif;
-		font-weight: 700;
-		font-size: clamp(15px, 1.05vw, 18px);
-		letter-spacing: -0.01em;
-		border-radius: 4px;
-		text-decoration: none;
-		border: none;
-		cursor: pointer;
-		transition: filter 0.2s, transform 0.2s, opacity 0.2s;
-		align-self: flex-start;
-	}
-	.cta-btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
-	.cta-btn:active { transform: translateY(0); }
-	.cta-btn:disabled { opacity: 0.6; cursor: default; transform: none; }
-
-	.form-success {
-		font-family: 'Archivo', system-ui, sans-serif;
-		font-size: clamp(16px, 1.2vw, 20px);
-		color: #c9a24b;
-		margin-top: clamp(20px, 2.4vh, 32px);
-	}
-
-	.form-error {
-		font-family: 'Archivo', system-ui, sans-serif;
-		font-size: clamp(13px, 0.9vw, 15px);
-		color: #e07070;
+	.rule {
+		border: 0;
+		height: 1px;
+		background: rgba(244,241,234,0.14);
 		margin: 0;
 	}
 
-	.copyright {
-		font-family: 'Archivo', system-ui, sans-serif;
-		font-weight: 700;
-		font-size: clamp(15px, 1.25vw, 20px);
-		letter-spacing: -0.01em;
-		line-height: 1.4;
-		opacity: 0.96;
-		white-space: nowrap;
-		margin: 0;
-		color: #fff;
-	}
+	.form-error { color: #e07070; font-size: 15px; margin: 0; }
 
-	@media (max-width: 640px) {
-		.title { font-size: clamp(26px, 8vw, 40px); }
-		.body p { font-size: clamp(18px, 5vw, 24px); max-width: 34ch; }
-		.apply-form { max-width: 100%; }
+	.submit-row { margin-top: 18px; }
+	.submit-btn { margin-top: 0; }
+
+	@media (max-width: 560px) {
+		.sheet { padding: 64px 26px 90px; }
+		.wordmark { font-size: 62px; }
+		p, li, .lead, .pitch { font-size: 18px; }
+		.sigs { gap: 12px 10px; }
+		.sig { min-width: 46%; }
 	}
 </style>
