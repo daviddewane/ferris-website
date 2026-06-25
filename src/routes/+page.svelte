@@ -59,21 +59,19 @@
 			</div>
 		</header>
 
-		<p class="lead">Once upon a time you worked with people you trusted, in a place that made you better, on problems worth solving. We think it&rsquo;s that time again.</p>
+		<p class="lead"><strong>The Ferris</strong> is a working club in the heart of Chicago where the most ambitious builders are leveraging AI to maximize their productivity.</p>
 
-		<p class="pitch">Introducing <strong>The Ferris</strong>, a members club in Chicago for people building at the frontiers of AI. You work in a beautiful building, in the heart of the city. You get your own AI assistant &mdash; we call it <em>Ferris</em> &mdash; and the space learns how you work and helps you work better. And you join a community of builders who make each other smarter.</p>
+		<p class="pitch">Imagine if you could clone yourself and be working on two tasks at once. AI has opened a door to this future. 10x and even 100x productivity is possible. There has never been a moment where so few can build so much so fast. This is not hype &mdash; it&rsquo;s already happened.</p>
 
-		<p>The Ferris runs on three things:</p>
+		<p>The Ferris is a workplace for ambitious, focused builders who want to take full advantage of these tools, learning together on the front lines as AI continues to unfold. Our path to helping you maximize your potential is built on three pillars.</p>
 
 		<ul>
-			<li><span class="dash">&mdash;</span><span><b>Wellness:</b> Ferris keeps you sharp through movement, rest, recovery.</span></li>
-			<li><span class="dash">&mdash;</span><span><b>Tools:</b> Best-in-class AI, integrated into your workflow.</span></li>
-			<li><span class="dash">&mdash;</span><span><b>Community Trained:</b> The more you contribute, the smarter it gets for everyone.</span></li>
+			<li><span class="dash">&mdash;</span><span><b>Ferris AI</b> is the in-house agent trained by our community and supercharging our workplace. Ferris is built to make you more intelligent, efficient, and connected to the other builders in our community.</span></li>
+			<li><span class="dash">&mdash;</span><span><b>Wellness</b> isn&rsquo;t a buzzword, it is a way of life. High-performance workers are behaving more like pro athletes. Healthy food, exercise, and mental fitness are requisite for peak performance.</span></li>
+			<li><span class="dash">&mdash;</span><span><b>Community</b> is here to propel you forward. Powerful peers on the edges of their field. Mentors with meaningful connections. Investors with an appetite for risk.</span></li>
 		</ul>
 
-		<p>We were among the early people asking what work could look like if you actually designed it well. Now, we intend to help build what comes next. The post-isolation era is just around the corner.</p>
-
-		<p>If this sounds like your kind of room, we want to meet you. Applications take about ten minutes. We read every one. Membership is limited. We optimize for talent, ambition, generosity, and a deep curiosity about what&rsquo;s coming next.</p>
+		<p>We want you at Ferris if you are on fire to create something truly remarkable &mdash; that can impact society and unlock tremendous value. Our job is to create the conditions around you for breakthrough success. Your job is to take the shot.</p>
 
 		<div class="signoff">
 			<div class="team">The Ferris Team</div>
