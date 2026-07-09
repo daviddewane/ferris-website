@@ -53,7 +53,7 @@
 		<header class="masthead">
 			<div class="wordmark">Ferris<div class="bar"></div></div>
 			<div class="meta">
-				<span>June 2026</span>
+				<span>July 2026</span>
 				<span>1 W Monroe Street</span>
 				<span>Chicago, IL</span>
 			</div>
