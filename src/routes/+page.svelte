@@ -59,19 +59,63 @@
 			</div>
 		</header>
 
-		<p class="lead"><strong>Ferris &amp; Co</strong> is a working club in the heart of Chicago for entrepreneurs building on the front lines of AI.</p>
+		<p class="lead">AI is in its earliest innings &mdash; and the most interesting work is being done by people who think like mad scientists. We built a place for them.</p>
 
-		<p class="pitch">Our members come to Ferris to maximize their productivity in order to build something great. We learn together, experiment together, play together, struggle together, and push each other to succeed. We believe the most direct path to progress is working in a cluster of talented people with similar goals.</p>
+		<p class="pitch">The Greeks had a word for the highest state of human flourishing: <em>eudaemonia</em>. It described a person who lived in the world so fully &mdash; through work, through excellence, through community &mdash; that they became more of who they were meant to be. Founders know a version of this. They flourish when they build something the world truly needs to create or overtake markets.</p>
 
-		<p>Ferris &amp; Co provides members with three fundamental advantages to optimize productivity:</p>
+		<p>Ferris &amp; Co is a club for founders in the heart of Chicago, designed for exactly this kind of flourishing. The space is designed to minimize distractions. It&rsquo;s optimized for focus, health, and connection. AI is built into the physical space and acts as an accelerant, so founders can avoid repetitive tasks and focus on achieving at scale.</p>
+
+		<h2 class="section-title">What We Believe</h2>
+
+		<p>We believe the greatest entrepreneurs are missionaries. Missionaries are true believers, lit from within by the belief that what they are building can change society for the better. They aren&rsquo;t building for someone else or short-term rewards. They carry that flame of that belief everywhere.</p>
+
+		<p>We believe this is the era of the 100x operator. The AI models available today are remarkable. What most people are still missing is the layer that makes them actually yours &mdash; one that learns your priorities, your voice, your rhythms, and acts on your behalf. The operators who figure that out will consistently outperform the ones who don&rsquo;t by allowing them to eliminate repetitive tasks. There has never been a better time for a small team to do something consequential.</p>
+
+		<p>And we believe great work is easier next to other great work. Growth compounds through proximity. Ambition sustains itself when it&rsquo;s shared.</p>
+
+		<h2 class="section-title">Who This Is For</h2>
+
+		<p>Ferris is for the missionary-minded founder. You come here because you see AI as an opportunity to reshape your work, giving you more freedom to do your very best work. You come here to protect your time, embrace a healthy lifestyle, and build warm relationships with other missionary-minded builders.</p>
+
+		<p>You don&rsquo;t need a finished company. You don&rsquo;t need funding. You have conviction, curiosity, and the sense that this is the moment to build something that matters.</p>
+
+		<h2 class="section-title">How The Ferris Helps</h2>
+
+		<p>These are the three ways Ferris helps you flourish:</p>
+
+		<div class="sub-item">
+			<div class="sub-number">01</div>
+			<h3 class="sub-title">Ferris AI</h3>
+			<p>The Ferris is more than a building. Every member is paired with a personal instance of Ferris AI, so it does the adapting, not you.</p>
+			<p>Ferris AI handles the repetitive work &mdash; the follow-ups, the research, the calendar Tetris, the drafts you&rsquo;d otherwise labor over &mdash; so you can focus on the core of your company.</p>
+			<p>Over time, it starts to anticipate you, surfacing what you need before you ask, with the fundamental goal of helping you scale long-term.</p>
+		</div>
+
+		<div class="sub-item">
+			<div class="sub-number">02</div>
+			<h3 class="sub-title">Design For Wellness</h3>
+			<p>Building as a missionary takes significant effort and demands that your body and mind keep up. Most companies take 5&ndash;10 years to go from chaos to owning marketshare. The entrepreneur who takes care of their mind and body gains an enormous advantage.</p>
+			<p>The Ferris was designed by some of the best workplace and hospitality architects to improve the space for you continuously. Growth is a product of stress followed by appropriate recovery, and every design detail of Ferris &amp; Co &mdash; from light to acoustics to choice of amenities &mdash; reinforces this principle. Our building is an <em>eudaemonia</em> machine.</p>
+		</div>
+
+		<div class="sub-item">
+			<div class="sub-number">03</div>
+			<h3 class="sub-title">Community</h3>
+			<p>Growth compounds with proximity. The missionaries who come here choose to be surrounded by others whose ambition matches their own. Shared conviction sharpens the pace, and the ordinary loneliness of building becomes something else entirely.</p>
+			<p>Every business is unique, and every founder&rsquo;s path is unique. To help members work through what&rsquo;s specific to theirs, The Ferris hosts an inner circle of operators, researchers, and builders who&rsquo;ve shipped real things in AI &mdash; available for the harder, more bespoke questions about where AI fits in your journey.</p>
+		</div>
+
+		<h2 class="section-title">What We Owe You Back</h2>
+
+		<p>We hold ourselves accountable to three outcomes for each member of our community, and we commit to reporting back regularly and openly on the following performance indicators:</p>
 
 		<ul>
-			<li><span class="dash">&mdash;</span><span><b>Open Ferris:</b> Our in-house AI agent, trained by our members, to help small teams build more powerful companies, faster. Ferris makes you more effective and helps you get the most value out of our network.</span></li>
-			<li><span class="dash">&mdash;</span><span><b>Wellness:</b> We believe that elite knowledge workers should treat their bodies and minds like pro athletes. We provide a body gym, brain gym, and healthy food so that you can balance stress with recovery.</span></li>
-			<li><span class="dash">&mdash;</span><span><b>Community:</b> Each member at Ferris is vetted for high levels of ambition, drive, and generosity. These are people that show up every day, contributing to an environment that breeds motivation.</span></li>
+			<li><span class="dash">1)</span><span><b>Time Returned:</b> The hours Ferris frees up for you.</span></li>
+			<li><span class="dash">2)</span><span><b>System Quality:</b> We measure and improve on how well Ferris learns from you, and evaluate how we can improve.</span></li>
+			<li><span class="dash">3)</span><span><b>Member Wellness:</b> The usage and ways we can make our members happier and healthier.</span></li>
 		</ul>
 
-		<p>Ferris is not a sandbox for start-ups. We are a serious group of builders who understand that great things typically take 5&ndash;10 of the best years of your life to move from ideation to adaptation. We exist to make you dramatically better. Come build with us.</p>
+		<p>If you&rsquo;re a missionary for what you&rsquo;re building, we want to meet you. Applications take about ten minutes. We read everyone.</p>
 
 		<div class="signoff">
 			<div class="team">The Ferris Team</div>
@@ -279,6 +323,36 @@
 	.dash { color: #f1a93f; flex: 0 0 auto; user-select: none; }
 	li b { font-weight: 600; color: #fff; }
 
+	/* ── Sections ── */
+	.section-title {
+		font-family: "Anton", "Arial Narrow", sans-serif;
+		font-weight: 400;
+		font-size: 26px;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+		color: #f1a93f;
+		margin: 56px 0 22px;
+		padding-top: 36px;
+		border-top: 1px solid rgba(244,241,234,0.14);
+	}
+	.sub-item { margin-bottom: 36px; }
+	.sub-item:last-child { margin-bottom: 0; }
+	.sub-number {
+		color: #f1a93f;
+		font-size: 14px;
+		letter-spacing: 0.16em;
+		margin-bottom: 8px;
+	}
+	.sub-title {
+		font-family: "Anton", "Arial Narrow", sans-serif;
+		font-weight: 400;
+		font-size: 21px;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+		color: #fff;
+		margin: 0 0 16px;
+	}
+
 	/* ── Signoff ── */
 	.signoff { margin-top: 58px; }
 	.team {
@@ -465,6 +539,8 @@
 		.sheet { padding: 64px 26px 90px; }
 		.wordmark { font-size: 62px; }
 		p, li, .lead, .pitch { font-size: 18px; }
+		.section-title { font-size: 22px; margin: 44px 0 18px; padding-top: 28px; }
+		.sub-title { font-size: 19px; }
 		.sigs { gap: 12px 10px; }
 		.sig { min-width: 46%; }
 	}
