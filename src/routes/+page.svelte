@@ -115,7 +115,7 @@
 			<li><span class="dash">3)</span><span><b>Member Wellness:</b> The usage and ways we can make our members happier and healthier.</span></li>
 		</ul>
 
-		<p>If you&rsquo;re a missionary for what you&rsquo;re building, we want to meet you. Applications take about ten minutes. We read everyone.</p>
+		<p>If you&rsquo;re a missionary for what you&rsquo;re building, we want to meet you. Applications take about ten minutes. We read every one.</p>
 
 		<div class="signoff">
 			<div class="team">The Ferris Team</div>
