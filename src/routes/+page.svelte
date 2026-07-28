@@ -51,7 +51,7 @@
 	<!-- ── Letter page ── -->
 	<main class="sheet">
 		<header class="masthead">
-			<div class="wordmark">Ferris<div class="bar"></div></div>
+			<div class="wordmark">Ferris &amp; Co.<div class="bar"></div></div>
 			<div class="meta">
 				<span>July 2026</span>
 				<span>1 W Monroe Street</span>
@@ -145,7 +145,7 @@
 	<!-- ── Thank you ── -->
 	<main class="sheet">
 		<header class="masthead">
-			<button class="wordmark wordmark-btn" onclick={() => { showForm = false; formState = 'idle'; }}>Ferris<div class="bar"></div></button>
+			<button class="wordmark wordmark-btn" onclick={() => { showForm = false; formState = 'idle'; }}>Ferris &amp; Co.<div class="bar"></div></button>
 		</header>
 		<div class="thankyou">
 			<h2>Thank you.</h2>
@@ -158,7 +158,7 @@
 	<!-- ── Application form ── -->
 	<main class="sheet">
 		<header class="masthead">
-			<button class="wordmark wordmark-btn" onclick={() => showForm = false}>Ferris<div class="bar"></div></button>
+			<button class="wordmark wordmark-btn" onclick={() => showForm = false}>Ferris &amp; Co.<div class="bar"></div></button>
 		</header>
 
 		<div class="form-intro">
