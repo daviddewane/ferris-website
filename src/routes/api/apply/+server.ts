@@ -28,7 +28,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		},
 		body: JSON.stringify({
 			from: 'Ferris Applications <onboarding@resend.dev>',
-			to: 'david@chicago-innovation.com',
+			to: 'david@ferrischicago.com',
 			subject: `New Ferris Application — ${data.name}`,
 			html,
 		}),
