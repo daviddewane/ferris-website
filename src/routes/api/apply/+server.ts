@@ -27,7 +27,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			'Content-Type': 'application/json',
 		},
 		body: JSON.stringify({
-			from: 'Ferris Applications <onboarding@resend.dev>',
+			from: 'Ferris Applications <applications@ferrischicago.com>',
 			to: 'david@ferrischicago.com',
 			subject: `New Ferris Application — ${data.name}`,
 			html,
@@ -35,8 +35,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	});
 
 	if (!res.ok) {
-		const errText = await res.text();
-		return json({ success: false, debug: errText }, { status: 500 });
+		return json({ success: false }, { status: 500 });
 	}
 
 	return json({ success: true });
