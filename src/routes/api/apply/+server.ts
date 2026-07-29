@@ -35,8 +35,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	});
 
 	if (!res.ok) {
-		const errText = await res.text();
-		return json({ success: false, debug: errText }, { status: 500 });
+		return json({ success: false }, { status: 500 });
 	}
 
 	return json({ success: true });
