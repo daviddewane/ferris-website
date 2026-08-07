@@ -56,6 +56,7 @@
 				<span>July 2026</span>
 				<span>1 W Monroe Street</span>
 				<span>Chicago, IL</span>
+				<a href="/blog" class="meta-link">Blog</a>
 			</div>
 		</header>
 
@@ -297,6 +298,8 @@
 		line-height: 2;
 	}
 	.meta span { display: block; white-space: nowrap; }
+	.meta-link { display: block; white-space: nowrap; text-decoration: underline; }
+	.meta-link:hover { color: #f7bd5e; }
 
 	/* ── Body ── */
 	p {
